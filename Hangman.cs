@@ -108,7 +108,7 @@ namespace Hangman_WinForms
             }
             else
             {
-                boxText = "Game over.Would you like to try again ? ";
+                boxText = $"Game over. The word was {String.Join("",wordGuessing.guessedWord)}. Would you like to try again ? ";
                 boxCaption = "Game over";
             }
             DialogResult playAgain = MessageBox.Show(boxText, boxCaption, MessageBoxButtons.YesNo);
