@@ -1,1 +1,1 @@
-# Hangman_WinForms
+# C# WinForms game of hangman. Random selection of words in three categories, includes a reset game button.
