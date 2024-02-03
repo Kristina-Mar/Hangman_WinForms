@@ -42,6 +42,7 @@
             // 
             // pictureBox
             // 
+            pictureBox.Image = Properties.Resources.hangman1;
             pictureBox.Location = new Point(45, 32);
             pictureBox.Name = "pictureBox";
             pictureBox.Size = new Size(350, 500);

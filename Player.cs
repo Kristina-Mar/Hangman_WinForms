@@ -9,7 +9,7 @@ namespace Hangman_WinForms
 {
     internal class Player
     {
-        public int MaxNumberOfWrongGuesses = 8;
+        public int MaxNumberOfWrongGuesses = 7;
         public int NumberOfWrongGuesses = 0;
         public string GuessedLettersString = string.Empty;
         public char[] GuessedLetters = { };

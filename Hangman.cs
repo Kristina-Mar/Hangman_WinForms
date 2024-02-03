@@ -12,6 +12,7 @@ namespace Hangman_WinForms
             InitializeComponent();
             labelGuessWordPrompt.Text = $"Guess the {wordGuessing.Category}:";
             labelGuessedWord.Text = String.Join(" ", wordGuessing.UncoveredGuessedWord);
+            labelGuessedLettersList.Text = string.Empty;
         }
         public void LetterGuess(object sender, EventArgs e)
         {
@@ -56,27 +57,24 @@ namespace Hangman_WinForms
             switch (player.NumberOfWrongGuesses)
             {
                 case (1):
-                    pictureBox.Image = Properties.Resources.hangman1;
-                    break;
-                case (2):
                     pictureBox.Image = Properties.Resources.hangman2;
                     break;
-                case (3):
+                case (2):
                     pictureBox.Image = Properties.Resources.hangman3;
                     break;
-                case (4):
+                case (3):
                     pictureBox.Image = Properties.Resources.hangman4;
                     break;
-                case (5):
+                case (4):
                     pictureBox.Image = Properties.Resources.hangman5;
                     break;
-                case (6):
+                case (5):
                     pictureBox.Image = Properties.Resources.hangman6;
                     break;
-                case (7):
+                case (6):
                     pictureBox.Image = Properties.Resources.hangman7;
                     break;
-                case (8):
+                case (7):
                     pictureBox.Image = Properties.Resources.hangman8;
                     break;
                 default:
@@ -86,7 +84,7 @@ namespace Hangman_WinForms
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
-            pictureBox.Image = null;
+            pictureBox.Image = Properties.Resources.hangman1;
             player.NumberOfWrongGuesses = 0;
             Array.Clear(wordGuessing.guessedWord);
             Array.Clear(wordGuessing.UncoveredGuessedWord);
