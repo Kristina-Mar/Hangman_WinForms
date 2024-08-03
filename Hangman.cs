@@ -14,43 +14,7 @@ namespace Hangman_WinForms
             labelGuessedWord.Text = String.Join(" ", wordGuessing.UncoveredGuessedWord);
             labelGuessedLettersList.Text = string.Empty;
         }
-        public void LetterGuess(object sender, EventArgs e)
-        {
-            if (textBoxGuessLetter.Text == string.Empty)
-            {
-                return;
-            }
-            player.GuessedLetters = player.GuessedLettersString.ToCharArray();
-            player.GuessedLetter = '_';
-            player.GuessedLetter = Char.ToUpper(textBoxGuessLetter.Text.First());
-            if (player.GuessedLetters.Contains(player.GuessedLetter) || !Regex.IsMatch(player.GuessedLetter.ToString(), "^[a-zA-Z]+$"))
-            // The loop checks if the player guesses the same letter again and if the player guesses only letters of the alphabet.
-            // The second condition only allows for letter in the English alphabet.
-            {
-                textBoxGuessLetter.Text = string.Empty;
-                return;
-            }
-            player.GuessedLettersString += player.GuessedLetter;
-            player.GuessedLetters = player.GuessedLettersString.ToCharArray();
-            labelGuessedLettersList.Text = String.Join(", ", player.GuessedLetters); // Writes out the letters the player has already guessed.
-            if (wordGuessing.DoesWordIncludeGuessedLetter(player.GuessedLetter))
-            {
-                labelGuessedWord.Text = String.Join(" ", wordGuessing.UncoveredGuessedWord);
-                if (wordGuessing.IsWordGuessed())
-                {
-                    DidIWin(true);
-                }
-            }
-            else
-            {
-                DrawHangman();
-                if (!player.IsAlive())
-                {
-                    DidIWin(false);
-                }
-            }
-            textBoxGuessLetter.Text = string.Empty;
-        }
+ 
         public void DrawHangman()
         {
             player.NumberOfWrongGuesses++;
@@ -94,6 +58,12 @@ namespace Hangman_WinForms
             player.GuessedLettersString = string.Empty;
             Array.Clear(player.GuessedLetters);
             labelGuessedLettersList.Text = string.Empty;
+            panelAllLetterButtons.Enabled = true;
+            foreach (Button b in panelAllLetterButtons.Controls)
+            {
+                b.Enabled = true;
+                b.BackColor = Color.White;
+            }
         }
         private void DidIWin(bool didIWin)
         {
@@ -106,13 +76,42 @@ namespace Hangman_WinForms
             }
             else
             {
-                boxText = $"Game over. The word was {String.Join("",wordGuessing.guessedWord)}. Would you like to try again ? ";
+                boxText = $"Game over. The word was {String.Join("", wordGuessing.guessedWord)}. Would you like to try again ? ";
                 boxCaption = "Game over";
             }
             DialogResult playAgain = MessageBox.Show(boxText, boxCaption, MessageBoxButtons.YesNo);
             if (playAgain == DialogResult.Yes)
             {
                 buttonReset.PerformClick();
+            }
+        }
+
+        private void GuessLetter(object sender, EventArgs e)
+        {
+            ((Button)sender).Enabled = false;
+            player.GuessedLetters = player.GuessedLettersString.ToCharArray();
+            player.GuessedLetter = '_';
+            player.GuessedLetter = ((Button)sender).Text.First();
+            player.GuessedLettersString += player.GuessedLetter;
+            player.GuessedLetters = player.GuessedLettersString.ToCharArray();
+            labelGuessedLettersList.Text = String.Join(", ", player.GuessedLetters); // Writes out the letters the player has already guessed.
+            if (wordGuessing.DoesWordIncludeGuessedLetter(player.GuessedLetter))
+            {
+                labelGuessedWord.Text = String.Join(" ", wordGuessing.UncoveredGuessedWord);
+                ((Button)sender).BackColor = Color.Green;
+                if (wordGuessing.IsWordGuessed())
+                {
+                    DidIWin(true);
+                }
+            }
+            else
+            {
+                ((Button)sender).BackColor = Color.Red;
+                DrawHangman();
+                if (!player.IsAlive())
+                {
+                    DidIWin(false);
+                }
             }
         }
     }
